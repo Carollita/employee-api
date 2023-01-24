@@ -1,4 +1,4 @@
-package com.company.api.dto;
+package org.acme.dto;
 
 import lombok.Builder;
 import lombok.Data;

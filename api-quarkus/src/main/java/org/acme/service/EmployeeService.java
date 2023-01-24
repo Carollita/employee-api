@@ -1,18 +1,19 @@
-package com.company.api.service;
+package org.acme.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import javax.enterprise.context.ApplicationScoped;
 
-import com.company.api.dto.EmployeeDto;
-import com.company.api.model.Employee;
-import com.company.api.repository.EmployeeRepository;
+import org.acme.dto.EmployeeDto;
+import org.acme.model.Employee;
+import org.acme.repository.EmployeeRepository;
 
-@Service
+import com.oracle.svm.core.annotate.Inject;
+
+@ApplicationScoped
 public class EmployeeService {
-    @Autowired
+    @Inject
     private EmployeeRepository employeeRepository;
 
     public void insertEmployee(EmployeeDto employee) {
@@ -27,13 +28,13 @@ public class EmployeeService {
         newEmployee.setSector(employee.getSector());
         newEmployee.setSalary(employee.getSalary());
 
-        employeeRepository.save(newEmployee);
+        employeeRepository.persist(newEmployee);
     }
 
     public List<EmployeeDto> findEmployee() {
         List<EmployeeDto> listEmployee = new ArrayList<>();
 
-        employeeRepository.findAll().forEach(item-> {
+        employeeRepository.findAll().list().forEach(item-> {
                 EmployeeDto employee = EmployeeDto
                 .builder()
                 .name(item.getName())

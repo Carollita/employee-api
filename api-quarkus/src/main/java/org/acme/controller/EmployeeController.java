@@ -1,38 +1,36 @@
-package com.company.api.controller;
+package org.acme.controller;
 
-import java.util.List;
+import javax.transaction.Transactional;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.core.Response;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.acme.dto.EmployeeDto;
+import org.acme.service.EmployeeService;
 
-import com.company.api.dto.EmployeeDto;
-import com.company.api.service.EmployeeService;
+import com.oracle.svm.core.annotate.Inject;
 
-@RestController
-@RequestMapping("/api/employee")
+@Path("/api/employee")
 public class EmployeeController {
 
-    @Autowired
+    @Inject
      private EmployeeService employeeService;
 
-     @GetMapping("/list")
-     public ResponseEntity<List<EmployeeDto>> findAllEmployees() {
-        return new ResponseEntity<>(employeeService.findEmployee(), HttpStatus.OK);
+     @GET
+     @Path("/list")
+     public Response listEmployee() {
+        return Response.ok(employeeService.findEmployee()).build();
      }
 
-     @PostMapping
-     public ResponseEntity<List<EmployeeDto>> createNewEmployee(@RequestBody EmployeeDto employee) {
+     @POST
+     @Transactional
+     public Response createNewEmployee(EmployeeDto employee) {
         try {
             employeeService.insertEmployee(employee);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return Response.ok().build();
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return Response.serverError().build();
         }
      }
 }

@@ -1,11 +1,11 @@
-package com.company.api.repository;
+package org.acme.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import javax.enterprise.context.ApplicationScoped;
 
-import com.company.api.model.Employee;
+import org.acme.model.Employee;
 
-@Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Long> {
-    
+import io.quarkus.hibernate.orm.panache.PanacheRepository;
+
+@ApplicationScoped
+public class EmployeeRepository implements PanacheRepository<Employee> {
 }

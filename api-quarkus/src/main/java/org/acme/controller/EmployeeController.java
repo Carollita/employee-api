@@ -1,5 +1,6 @@
 package org.acme.controller;
 
+import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -9,7 +10,7 @@ import javax.ws.rs.core.Response;
 import org.acme.dto.EmployeeDto;
 import org.acme.service.EmployeeService;
 
-import com.oracle.svm.core.annotate.Inject;
+
 
 @Path("/api/employee")
 public class EmployeeController {
@@ -20,6 +21,8 @@ public class EmployeeController {
      @GET
      @Path("/list")
      public Response listEmployee() {
+        // return Response.ok(employeeService.findEmployee()).build();
+        System.out.println(Response.ok(employeeService.findEmployee()));
         return Response.ok(employeeService.findEmployee()).build();
      }
 

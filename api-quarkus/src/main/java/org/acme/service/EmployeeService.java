@@ -4,12 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 import org.acme.dto.EmployeeDto;
 import org.acme.model.Employee;
 import org.acme.repository.EmployeeRepository;
-
-import com.oracle.svm.core.annotate.Inject;
 
 @ApplicationScoped
 public class EmployeeService {
